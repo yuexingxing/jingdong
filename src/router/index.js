@@ -42,7 +42,9 @@ router.beforeEach((to, from, next) => {
 	} = localStorage;
 
 	console.log("router-isLogin", isLogin);
-	(isLogin || to.name === "Login") ? next() : next({ name: "Login"})
+	const { name } = to;
+	const { isLoginOrRegister } = (name === "Login" || name === "Register");
+	(isLogin || isLoginOrRegister) ? next() : next({ name: "Login"})
 });
 
 export default router
