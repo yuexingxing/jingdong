@@ -10,7 +10,7 @@
     <div class="wrapper__input">
       <input class="wrapper__input__content" placeholder="请再次输入密码" type="password" />
     </div>
-    <div class="wrapper__register-button">注册</div>
+    <div class="wrapper__register-button" @click="handleRegisterClick">注册</div>
     <div class="wrapper__register-link" @click="handleToLoginClick">已有帐号点击登录</div>
   </div>
 </template>
@@ -28,8 +28,12 @@
           name: "Login"
         });
       }
+	  const handleRegisterClick = () => {
+		  localStorage.setItem("isLogin", true)
+		  router.push({name: 'Home'});
+	  }
       return{
-        handleToLoginClick
+        handleToLoginClick, handleRegisterClick
       }
     }
   }
