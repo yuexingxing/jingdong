@@ -15,13 +15,15 @@ const routes = [{
 		path: '/login',
 		name: 'Login',
 		component: Login,
-		beforeEnter(to, from, next) {
-			console.log("router-beforeEnter", to, from);
-			const {
-				isLogin
-			} = localStorage;
-			(isLogin)? next({name: "Home"}) : next();
-		}
+		// beforeEnter(to, from, next) {
+		// 	console.log("router-beforeEnter", to, from);
+		// 	const {
+		// 		isLogin
+		// 	} = localStorage;
+		// 	(isLogin) ? next({
+		// 		name: "Home"
+		// 	}): next();
+		// }
 	},
 	{
 		path: '/register',
@@ -37,14 +39,22 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 	console.log("router-beforeEach", to, from);
-	const {
-		isLogin
-	} = localStorage;
+	next();
+	// const {
+	// 	isLogin
+	// } = localStorage;
 
-	console.log("router-isLogin", isLogin);
-	const { name } = to;
-	const { isLoginOrRegister } = (name === "Login" || name === "Register");
-	(isLogin || isLoginOrRegister) ? next() : next({ name: "Login"})
+	// isLogin = false;
+	// console.log("router-isLogin", isLogin);
+	// const {
+	// 	name
+	// } = to;
+	// const {
+	// 	isLoginOrRegister
+	// } = (name === "Login" || name === "Register");
+	// (isLogin || isLoginOrRegister) ? next(): next({
+	// 	name: "Login"
+	// })
 });
 
 export default router

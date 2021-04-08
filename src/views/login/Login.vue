@@ -2,14 +2,10 @@
 	<div class="wrapper">
 		<img class="wrapper__img" src="http://www.dell-lee.com/imgs/vue3/user.png" />
 		<div class="wrapper__input">
-			<input class="wrapper__input__content"
-			 v-model="data.phone"
-			 placeholder="请输入手机号" type="number" />
+			<input class="wrapper__input__content" v-model="data.phone" placeholder="请输入手机号" type="number" />
 		</div>
 		<div class="wrapper__input">
-			<input class="wrapper__input__content" 
-			v-model="data.ver_code"
-			placeholder="请输入密码" type="password" />
+			<input class="wrapper__input__content" v-model="data.ver_code" placeholder="请输入密码" type="password" />
 		</div>
 		<div class="wrapper__login-button" @click="hanldeLoginClick">登录</div>
 		<div class="wrapper__login-link" @click="handleToRegisterClick">立即注册</div>
@@ -20,7 +16,7 @@
 	import {
 		reactive
 	} from 'vue'
-	import axios from 'axios'
+	import { post } from '../../util/request.js'
 	import {
 		useRouter
 	} from 'vue-router'
@@ -32,26 +28,26 @@
 				ver_code: ''
 			})
 			const router = useRouter();
-			const hanldeLoginClick = () => {
-				console.log(data.phone + "/" + data.ver_code)
-				axios
-					.post('https://api.sancellvarymay.com/ssxq/w/auth/appPhoneLogin', {
+			const hanldeLoginClick = async () => {
+				try {
+					const result = await post('ssxq/w/auth/appPhoneLogin', {
 						phone: data.phone,
 						ver_code: data.ver_code
 					})
-					.then((response) => {
-						console.log(response.data);
+					if (result?.data?.ret === 'OK') {
 						localStorage.setItem("isLogin", true);
-						localStorage.setItem("token", response.data.content.token)
-						alert('登录成功-' + response.data.msg)
+						localStorage.setItem("token", result.data.content.token)
+						alert('登录成功-' + result.data.msg)
 						router.push({
 							name: "Home"
 						})
-					})
-					.catch((error) => {
-						console.log(error.data)
-						alert('登录失败-' + error.data.msg)
-					})
+					} else {
+						alert('登录失败-' + result.data.msg)
+					}
+				} catch (e) {
+					//TODO handle the exception
+					alert('登录失败')
+				}
 			}
 			const handleToRegisterClick = () => {
 				router.push({

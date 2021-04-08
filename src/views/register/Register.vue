@@ -11,7 +11,7 @@
       <input class="wrapper__input__content" placeholder="请再次输入密码" type="password" />
     </div>
     <div class="wrapper__register-button" @click="handleRegisterClick">注册</div>
-    <div class="wrapper__register-link" @click="handleToLoginClick">已有帐号点击登录</div>
+    <div class="wrapper__register-link" @click="handleToLoginClick">已有帐号去登录</div>
   </div>
 </template>
 
@@ -42,7 +42,7 @@
 <style lang="scss" scoped>
   .wrapper {
     position: absolute;
-    margin-top: 50%;
+    margin-top: 30%;
     left: 0;
     right: 0;
 
