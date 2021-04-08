@@ -12,6 +12,7 @@
     </div>
     <div class="wrapper__register-button" @click="handleRegisterClick">注册</div>
     <div class="wrapper__register-link" @click="handleToLoginClick">已有帐号去登录</div>
+	<Toast />
   </div>
 </template>
 
@@ -19,6 +20,9 @@
   import {
     useRouter
   } from 'vue-router'
+  import { reactive } from 'vue'
+  import Toast from '../../components/Toast.vue'
+  
   export default {
     name: 'Register',
     setup() {

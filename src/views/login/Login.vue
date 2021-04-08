@@ -9,6 +9,7 @@
 		</div>
 		<div class="wrapper__login-button" @click="hanldeLoginClick">登录</div>
 		<div class="wrapper__login-link" @click="handleToRegisterClick">立即注册</div>
+		<Toast v-if="toastData.showToast" :message="toastData.toastMessage" />
 	</div>
 </template>
 
@@ -16,18 +17,44 @@
 	import {
 		reactive
 	} from 'vue'
-	import { post } from '../../util/request.js'
 	import {
 		useRouter
 	} from 'vue-router'
+	import {
+		post
+	} from '../../util/request.js'
+	import Toast from '../../components/Toast.vue'
+	
+	const useToastEffect = () => {
+		const toastData = reactive ({
+			showToast: false,
+			toastMessage: ''
+		})
+		const showToast = (message) => {
+			toastData.showToast = true;
+			toastData.toastMessage = message;
+			setTimeout(() => {
+				toastData.showToast = false;
+				toastData.toastMessage = '';
+			}, 2000)
+		}
+		return {
+			toastData, showToast
+		}
+	}
+
 	export default {
 		name: 'Login',
+		components: {
+			Toast
+		},
 		setup() {
+			const router = useRouter();
 			const data = reactive({
 				phone: '',
 				ver_code: ''
 			})
-			const router = useRouter();
+			const { toastData, showToast } = useToastEffect();
 			const hanldeLoginClick = async () => {
 				try {
 					const result = await post('ssxq/w/auth/appPhoneLogin', {
@@ -37,16 +64,16 @@
 					if (result?.data?.ret === 'OK') {
 						localStorage.setItem("isLogin", true);
 						localStorage.setItem("token", result.data.content.token)
-						alert('登录成功-' + result.data.msg)
+						showToast('登录成功')
 						router.push({
 							name: "Home"
 						})
 					} else {
-						alert('登录失败-' + result.data.msg)
+						showToast('登录失败-' + result.data.msg)
 					}
 				} catch (e) {
 					//TODO handle the exception
-					alert('登录失败')
+					showToast('登录失败')
 				}
 			}
 			const handleToRegisterClick = () => {
@@ -57,7 +84,9 @@
 			return {
 				data,
 				hanldeLoginClick,
-				handleToRegisterClick
+				handleToRegisterClick,
+				toastData,
+				showToast
 			}
 		}
 	}
