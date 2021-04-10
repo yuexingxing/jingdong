@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<div class="bigcafe__item-container">
-				<div v-for="(item, index) in data.bigcafeList" :key="index" class="bigcafe__item"
+				<div v-for="(item, index) in bigCafeData.bigCafeList" :key="index" class="bigcafe__item"
 					@click="handleBigCafeItemClick(item)">
 					<el-avatar class="bigcafe__avatar" :src="item.avatar" />
 					<label class="bigcafe__nickname">{{item.nickname}}</label>
@@ -39,15 +39,37 @@
 	import {
 		reactive
 	} from 'vue'
+	import {
+		get
+	} from '../../util/request_get.js'
+	const BigCafeEffect = () => {
 
+		const bigCafeData = reactive({
+			bigCafeList: []
+		})
+
+		const getBigCafeData = async () => {
+			const result = await get("api/live/mlive/recommend/user")
+			console.log(result)
+			if (result.ret === 'OK') {
+				bigCafeData.bigCafeList = result.content.rows;
+			} else {
+				alert("请求失败");
+			}
+		}
+
+		return {
+			getBigCafeData,
+			bigCafeData
+		}
+	}
 	export default {
 		name: 'HomePage',
 		components: {},
 		setup() {
 			console.log("setup")
 			const data = reactive({
-				bannerList: [],
-				bigcafeList: []
+				bannerList: []
 			})
 			const handleBannerClick = () => {
 				alert("banner")
@@ -58,6 +80,10 @@
 			const handleChangeBigCafeClick = () => {
 				alert("change")
 			}
+			const {
+				getBigCafeData,
+				bigCafeData
+			} = BigCafeEffect();
 			axios
 				.get('https://api.sancellvarymay.com/api/live/mlive/ad?page=1&pageSize=6')
 				.then(response => {
@@ -69,22 +95,23 @@
 					}
 				})
 				.catch()
-			axios
-				.get('https://api.sancellvarymay.com/api/live/mlive/recommend/user')
-				.then(response => {
-					console.log(response.data)
-					if (response.data.ret === 'OK') {
-						data.bigcafeList = response.data.content.rows;
-					} else {
-						alert("请求失败");
-					}
-				})
-				.catch()
+			getBigCafeData()
+			// get('https://api.sancellvarymay.com/api/live/mlive/recommend/user')
+			// 	.then(response => {
+			// 		console.log(response.data)
+			// 		if (response.data.ret === 'OK') {
+			// 			data.bigcafeList = response.data.content.rows;
+			// 		} else {
+			// 			alert("请求失败");
+			// 		}
+			// 	})
+			// 	.catch()
 			return {
 				data,
 				handleBigCafeItemClick,
 				handleChangeBigCafeClick,
-				handleBannerClick
+				handleBannerClick,
+				bigCafeData
 			}
 		},
 		mounted() {
