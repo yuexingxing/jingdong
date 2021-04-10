@@ -66,7 +66,7 @@
 						localStorage.setItem("token", result.data.content.token)
 						showToast('登录成功')
 						router.push({
-							name: "Home"
+							name: "HomePage"
 						})
 					} else {
 						showToast('登录失败-' + result.data.msg)

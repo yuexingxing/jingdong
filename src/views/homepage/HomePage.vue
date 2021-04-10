@@ -1,0 +1,191 @@
+<template>
+	<div class="container">
+		<div class="banner">
+			<div class="block">
+				<el-carousel height="2rem">
+					<el-carousel-item v-for="(item, index) in data.bannerList" :key="index">
+						<el-image class="banner_img" :src="item.artitag_url"></el-image>
+					</el-carousel-item>
+				</el-carousel>
+			</div>
+		</div>
+
+		<div class="bigcafe">
+			<div class="bigcafe__top-container">
+				<div>
+					<label class="bigcafe__title">高定官在线</label>
+				</div>
+				<div class="bigcafe__space"></div>
+
+				<div @click="handleChangeBigCafeClick">
+					<label class="bigcafe__change">换一换</label>
+					<img class="bigcafe__img" src="../../assets/icon_refresh.png" />
+				</div>
+			</div>
+			<div class="bigcafe__item-container">
+				<div v-for="(item, index) in data.bigcafeList" :key="index" class="bigcafe__item"
+					@click="handleBigCafeItemClick(item)">
+					<el-avatar class="bigcafe__avatar" :src="item.avatar" />
+					<label class="bigcafe__nickname">{{item.nickname}}</label>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</template>
+
+<script>
+	import axios from 'axios'
+	import {
+		reactive
+	} from 'vue'
+
+	export default {
+		name: 'HomePage',
+		components: {},
+		setup() {
+			console.log("setup")
+			const data = reactive({
+				bannerList: [],
+				bigcafeList: []
+			})
+			const handleBannerClick = () => {
+				alert("banner")
+			}
+			const handleBigCafeItemClick = (item) => {
+				alert(item.nickname)
+			}
+			const handleChangeBigCafeClick = () => {
+				alert("change")
+			}
+			axios
+				.get('https://api.sancellvarymay.com/api/live/mlive/ad?page=1&pageSize=6')
+				.then(response => {
+					console.log(response.data)
+					if (response.data.ret === 'OK') {
+						data.bannerList = response.data.content;
+					} else {
+						alert("请求失败");
+					}
+				})
+				.catch()
+			axios
+				.get('https://api.sancellvarymay.com/api/live/mlive/recommend/user')
+				.then(response => {
+					console.log(response.data)
+					if (response.data.ret === 'OK') {
+						data.bigcafeList = response.data.content.rows;
+					} else {
+						alert("请求失败");
+					}
+				})
+				.catch()
+			return {
+				data,
+				handleBigCafeItemClick,
+				handleChangeBigCafeClick,
+				handleBannerClick
+			}
+		},
+		mounted() {
+			console.log("mounted")
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.container {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.horizontal {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.column {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.banner {
+		width: 100%;
+		height: 2.0rem;
+		margin-top: .12rem;
+
+		&__img {
+			width: 95%;
+			height: 100%;
+		}
+	}
+
+	.bigcafe {
+		width: 95%;
+		display: flex;
+		flex-direction: column;
+		margin-top: .06rem;
+		margin-left: .12rem;
+		margin-right: .12rem;
+
+		&__top-container {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			height: .48rem;
+		}
+
+		&__title {
+			font-size: .16rem;
+			color: #E20000;
+			font-weight: 700;
+		}
+
+		&__change {
+			font-size: .12rem;
+			color: #999999;
+		}
+
+		&__img {
+			width: .11rem;
+			height: .12rem;
+			margin-left: .03rem;
+		}
+
+		&__space {
+			flex: 1;
+			height: 1px;
+		}
+
+		&__item-container {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+		}
+
+		&__item {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			justify-content: center;
+			align-items: center;
+		}
+
+		&__avatar {
+			width: .37rem;
+			height: .37rem;
+			justify-content: center;
+		}
+
+		&__nickname {
+			margin-top: .04rem;
+			display: block;
+			overflow: hidden;
+			width: .50rem;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	}
+</style>

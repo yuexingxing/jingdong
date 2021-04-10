@@ -1,4 +1,5 @@
 <template>
+	
   <div class="wrapper">
     <img class="wrapper__img" src="http://www.dell-lee.com/imgs/vue3/user.png" />
     <div class="wrapper__input">
@@ -14,9 +15,18 @@
     <div class="wrapper__register-link" @click="handleToLoginClick">已有帐号去登录</div>
 	<Toast />
   </div>
+<div>
+  <el-button>默认按钮</el-button>
+  <el-button type="primary">主要按钮</el-button>
+  <el-button type="success">成功按钮</el-button>
+  <el-button type="info">信息按钮</el-button>
+  <el-button type="warning">警告按钮</el-button>
+  <el-button type="danger">危险按钮</el-button>
+</div>
 </template>
 
 <script>
+
   import {
     useRouter
   } from 'vue-router'
@@ -25,6 +35,11 @@
   
   export default {
     name: 'Register',
+	data() {
+	    return {
+	      radio: "1"
+	    };
+	  },
     setup() {
       const router = useRouter();
       const handleToLoginClick = () => {
@@ -34,7 +49,7 @@
       }
 	  const handleRegisterClick = () => {
 		  localStorage.setItem("isLogin", true)
-		  router.push({name: 'Home'});
+		  router.push({name: 'HomePage'});
 	  }
       return{
         handleToLoginClick, handleRegisterClick

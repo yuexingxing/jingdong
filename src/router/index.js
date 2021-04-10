@@ -2,14 +2,14 @@ import {
 	createRouter,
 	createWebHashHistory
 } from 'vue-router'
-import Home from '../views/home/Home.vue'
+import HomePage from '../views/homepage/HomePage.vue'
 import Login from '../views/login/Login.vue'
 import Register from '../views/register/Register.vue'
 
 const routes = [{
 		path: '/',
-		name: 'Home',
-		component: Home
+		name: 'HomePage',
+		component: HomePage
 	},
 	{
 		path: '/login',
