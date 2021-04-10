@@ -45,14 +45,23 @@
 	const BigCafeEffect = () => {
 
 		const bigCafeData = reactive({
+			page: 1,
+			pageSize: 6,
+			count: 0,
 			bigCafeList: []
 		})
 
 		const getBigCafeData = async () => {
-			const result = await get("api/live/mlive/recommend/user")
+			const result = await get("api/live/mlive/recommend/user?page=" + bigCafeData.page + "&pageSize=" + bigCafeData.pageSize)
 			console.log(result)
 			if (result.ret === 'OK') {
+				bigCafeData.count = result.content.count;
 				bigCafeData.bigCafeList = result.content.rows;
+				if(bigCafeData.bigCafeList.length === 6){
+					bigCafeData.page++;
+				} else{
+					bigCafeData.page = 1;
+				}
 			} else {
 				alert("请求失败");
 			}
@@ -78,7 +87,7 @@
 				alert(item.nickname)
 			}
 			const handleChangeBigCafeClick = () => {
-				alert("change")
+				getBigCafeData();
 			}
 			const {
 				getBigCafeData,
@@ -96,16 +105,6 @@
 				})
 				.catch()
 			getBigCafeData()
-			// get('https://api.sancellvarymay.com/api/live/mlive/recommend/user')
-			// 	.then(response => {
-			// 		console.log(response.data)
-			// 		if (response.data.ret === 'OK') {
-			// 			data.bigcafeList = response.data.content.rows;
-			// 		} else {
-			// 			alert("请求失败");
-			// 		}
-			// 	})
-			// 	.catch()
 			return {
 				data,
 				handleBigCafeItemClick,
