@@ -3,7 +3,8 @@ import axios from "axios"
 export const get = (url) => {
 	return new Promise((resolve, reject) => {
 		axios.get(url, {
-			baseURL: 'https://api.sancellvarymay.com/',
+			// baseURL: 'https://api.sancellvarymay.com/',
+			baseURL: 'http://t2wxapi.sancell.top/',
 			headers: {
 				'Content-Type': 'application/json'
 			}

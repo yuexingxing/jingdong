@@ -1,23 +1,25 @@
 <template>
 	<div class="container-top">
 		<div class="item" v-for="(item, index) in modelData.list" :key="index">
-
-			<img class="item__live__bg" :src="item.frontcover" />
-			<div class="item__live">
-				<label class="item__live__dot">.</label>
-				<label class="item__live__title">直播中</label>
+			
+				<el-image class="item__live__bg" :src="item.frontcover" alt=""
+					placeholder="../../assets/image_graphofbooth_default2.png" :fit="fit" />
+				<div class="item__live">
+					<div class="item__live__dot"></div>
+					<label class="item__live__title">直播中</label>
+				</div>
+				<label class="space"></label>
+				<div>
+					<label class="item__content">{{item.live_title}}</label>
+				</div>
+				<div class="item__bottom">
+					<el-avatar class="item__bottom__avatar" :src="item.pushers.avatar"></el-avatar>
+					<label class="item__bottom__name">{{item.pushers.anchor_name}}</label>
+					<img class="item__bottom__bell" src="../../assets/img_bell.png" />
+					<label class="item__bottom__count">{{item.thumb}}人</label>
+				</div>
 			</div>
-			<label class="space"></label>
-			<div>
-				<label class="item__content">{{item.live_title}}</label>
-			</div>
-			<div class="item_bottom">
-				<el-avatar class="item__bottom__avatar" :src="item.pushers.avatar"></el-avatar>
-				<label class="item__bottom__name">{{item.pushers.anchor_name}}</label>
-				<img class="item__bottom__bell" src="../../assets/img_bell.png" />
-				<label class="item__bottom__count">{{item.thumb}}人</label>
-			</div>
-		</div>
+		
 	</div>
 </template>
 
@@ -31,7 +33,7 @@
 	const ModelDataEffect = () => {
 
 		const modelData = reactive({
-			tags: "",
+			tag: "",
 			index: 1,
 			list: []
 		})
@@ -45,12 +47,19 @@
 				modelData.tags = "投资理财"
 			} else if (modelData.index === 2) {
 				modelData.tags = "高端珠宝"
-			}else{
+			} else {
 				modelData.tags = "健康咨询"
 			}
 			const result = await get("api/live/mlive/video/list");
 			console.log(result)
 			if (result.ret === 'OK') {
+				console.log("size-" + result.content.rows.length)
+				for(var i=0; i< result.content.rows.length; i++){
+					console.log(result.content.rows[i].live_title)
+					if(result.content.rows[i].frontcover === ''){
+						result.content.rows[i].frontcover = "http://img.cyw.com/shopx/20130606155913125664/shopinfo/201605041441522.jpg";
+					}
+				}
 				modelData.list = result.content.rows;
 			}
 		}
@@ -69,7 +78,10 @@
 		],
 		watch: {
 			index(newData, oldData) {
-				console.log("watch-" + newData + "-"+ oldData)
+				console.log("watch-" + newData + "-" + oldData)
+			},
+			tags(newData, oldData) {
+				console.log("watch-" + newData + "-" + oldData)
 			}
 		},
 		setup() {
@@ -109,17 +121,24 @@
 		flex-direction: column;
 
 		&__live {
-			width: .4rem;
+			display: flex;
+			flex-direction: row;
+			width: .60rem;
 			height: .15rem;
 			border: .03rem solid red;
 			background: red;
+			border-radius: .30rem;
 			margin-left: .12rem;
 			margin-top: .12rem;
+			align-items: center;
 
 			&__dot {
-				width: .05rem;
-				height: .05rem;
-				color: white;
+				width: .02rem;
+				height: .02rem;
+				margin-left: .04rem;
+				border: .02rem solid white;
+				border-radius: .04rem;
+				background: white;
 			}
 
 			&__bg {
@@ -132,6 +151,7 @@
 			&__title {
 				font-size: .1rem;
 				color: white;
+				margin-left: .03rem;
 			}
 		}
 
@@ -139,6 +159,7 @@
 			font-size: .13rem;
 			color: white;
 			margin-bottom: .08rem;
+			margin-left: .12rem;
 		}
 
 		&__bottom {
@@ -147,7 +168,7 @@
 			margin-top: .07rem;
 			justify-content: center;
 			align-items: center;
-			background-color: black;
+			margin-left: .12rem;
 
 			&__avatar {
 				width: .19rem;
@@ -156,6 +177,7 @@
 
 			&__name {
 				font-size: .13rem;
+				margin-left: .02rem;
 				color: white;
 				flex: 1;
 			}
@@ -164,6 +186,7 @@
 				font-size: .13rem;
 				color: white;
 				margin-left: .02rem;
+				margin-right: .08rem;
 			}
 
 			&__bell {

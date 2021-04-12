@@ -31,6 +31,14 @@
 			</div>
 		</div>
 
+		<div class="model">
+			<el-tabs v-model="data.activeName" @tab-click="handleModelClick">
+				<el-tab-pane label="健康咨询" name="first"><ModelFragment :index="1" :tags="健康咨询"/></el-tab-pane>
+				<el-tab-pane label="魅力无限" name="second"><ModelFragment :index="2" :tags="魅力无限"/></el-tab-pane>
+				<el-tab-pane label="投资理财" name="third"><ModelFragment :index="3" :tags="投资理财"/></el-tab-pane>
+				<el-tab-pane label="高端珠宝" name="fourth"><ModelFragment :index="4" :tags="高端珠宝"/></el-tab-pane>
+			</el-tabs>
+		</div>
 	</div>
 </template>
 
@@ -42,6 +50,7 @@
 	import {
 		get
 	} from '../../util/request_get.js'
+	import ModelFragment from './ModelFragment.vue'
 	const BigCafeEffect = () => {
 
 		const bigCafeData = reactive({
@@ -52,14 +61,15 @@
 		})
 
 		const getBigCafeData = async () => {
-			const result = await get("api/live/mlive/recommend/user?page=" + bigCafeData.page + "&pageSize=" + bigCafeData.pageSize)
+			const result = await get("api/live/mlive/recommend/user?page=" + bigCafeData.page + "&pageSize=" +
+				bigCafeData.pageSize)
 			console.log(result)
 			if (result.ret === 'OK') {
 				bigCafeData.count = result.content.count;
 				bigCafeData.bigCafeList = result.content.rows;
-				if(bigCafeData.bigCafeList.length === 6){
+				if (bigCafeData.bigCafeList.length === 6) {
 					bigCafeData.page++;
-				} else{
+				} else {
 					bigCafeData.page = 1;
 				}
 			} else {
@@ -74,10 +84,10 @@
 	}
 	export default {
 		name: 'HomePage',
-		components: {},
+		components: { ModelFragment },
 		setup() {
-			console.log("setup")
 			const data = reactive({
+				activeName: 'second',
 				bannerList: []
 			})
 			const handleBannerClick = () => {
@@ -115,8 +125,14 @@
 		},
 		mounted() {
 			console.log("mounted")
+		},
+		methods: {
+			handleModelClick(tab, event) {
+				console.log(tab, event);
+			}
 		}
 	}
+	
 </script>
 
 <style lang="scss" scoped>
@@ -213,5 +229,13 @@
 			white-space: nowrap;
 			text-overflow: ellipsis;
 		}
+	}
+
+	.model {
+		width: 100%;
+		display: flex;
+		margin-top: .12rem;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
