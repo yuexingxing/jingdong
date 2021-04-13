@@ -5,6 +5,7 @@ import {
 import HomePage from '../views/homepage/HomePage.vue'
 import Login from '../views/login/Login.vue'
 import Register from '../views/register/Register.vue'
+import AnchorFragment from '../views/homepage/AnchorFragment.vue'
 
 const routes = [{
 		path: '/',
@@ -29,6 +30,11 @@ const routes = [{
 		path: '/register',
 		name: 'Register',
 		component: Register
+	},
+	{
+		path: '/homepage',
+		name: 'AnchorFragment',
+		component: AnchorFragment
 	}
 ]
 

@@ -33,10 +33,18 @@
 
 		<div class="model">
 			<el-tabs v-model="data.activeName" @tab-click="handleModelClick">
-				<el-tab-pane label="健康咨询" name="first"><ModelFragment :index="1" :tags="健康咨询"/></el-tab-pane>
-				<el-tab-pane label="魅力无限" name="second"><ModelFragment :index="2" :tags="魅力无限"/></el-tab-pane>
-				<el-tab-pane label="投资理财" name="third"><ModelFragment :index="3" :tags="投资理财"/></el-tab-pane>
-				<el-tab-pane label="高端珠宝" name="fourth"><ModelFragment :index="4" :tags="高端珠宝"/></el-tab-pane>
+				<el-tab-pane label="健康咨询" name="first">
+					<ModelFragment :index="1" :tags="健康咨询" />
+				</el-tab-pane>
+				<el-tab-pane label="魅力无限" name="second">
+					<ModelFragment :index="2" :tags="魅力无限" />
+				</el-tab-pane>
+				<el-tab-pane label="投资理财" name="third">
+					<ModelFragment :index="3" :tags="投资理财" />
+				</el-tab-pane>
+				<el-tab-pane label="高端珠宝" name="fourth">
+					<ModelFragment :index="4" :tags="高端珠宝" />
+				</el-tab-pane>
 			</el-tabs>
 		</div>
 	</div>
@@ -47,6 +55,9 @@
 	import {
 		reactive
 	} from 'vue'
+	import {
+		useRouter
+	} from 'vue-router'
 	import {
 		get
 	} from '../../util/request_get.js'
@@ -84,17 +95,26 @@
 	}
 	export default {
 		name: 'HomePage',
-		components: { ModelFragment },
+		components: {
+			ModelFragment
+		},
 		setup() {
 			const data = reactive({
 				activeName: 'second',
 				bannerList: []
 			})
+			const router = useRouter()
 			const handleBannerClick = () => {
 				alert("banner")
 			}
 			const handleBigCafeItemClick = (item) => {
-				alert(item.nickname)
+				
+				router.push({
+					name: "AnchorFragment",
+					params: {
+						anchorId: item.mem_id
+					}
+				})
 			}
 			const handleChangeBigCafeClick = () => {
 				getBigCafeData();
@@ -132,7 +152,6 @@
 			}
 		}
 	}
-	
 </script>
 
 <style lang="scss" scoped>

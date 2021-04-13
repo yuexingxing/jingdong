@@ -28,6 +28,9 @@
 		reactive
 	} from 'vue'
 	import {
+		useRouter
+	} from 'vue-router'
+	import {
 		get
 	} from '../../util/request_get.js'
 	const ModelDataEffect = () => {
