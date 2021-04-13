@@ -9,26 +9,30 @@
 				</el-carousel>
 			</div>
 		</div>
+		<div class="bigcafe-container">
+			<el-card class="box-card" :body-style="{padding: '2px' }">
 
-		<div class="bigcafe">
-			<div class="bigcafe__top-container">
-				<div>
-					<label class="bigcafe__title">高定官在线</label>
-				</div>
-				<div class="bigcafe__space"></div>
+				<div class="bigcafe">
+					<div class="bigcafe__top-container">
+						<div>
+							<label class="bigcafe__title">高定官在线</label>
+						</div>
+						<div class="bigcafe__space"></div>
 
-				<div @click="handleChangeBigCafeClick">
-					<label class="bigcafe__change">换一换</label>
-					<img class="bigcafe__img" src="../../assets/icon_refresh.png" />
+						<div @click="handleChangeBigCafeClick">
+							<label class="bigcafe__change">换一换</label>
+							<img class="bigcafe__img" src="../../assets/icon_refresh.png" />
+						</div>
+					</div>
+					<div class="bigcafe__item-container">
+						<div v-for="(item, index) in bigCafeData.bigCafeList" :key="index" class="bigcafe__item"
+							@click="handleBigCafeItemClick(item)">
+							<el-avatar class="bigcafe__avatar" :src="item.avatar" />
+							<label class="bigcafe__nickname">{{item.nickname}}</label>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="bigcafe__item-container">
-				<div v-for="(item, index) in bigCafeData.bigCafeList" :key="index" class="bigcafe__item"
-					@click="handleBigCafeItemClick(item)">
-					<el-avatar class="bigcafe__avatar" :src="item.avatar" />
-					<label class="bigcafe__nickname">{{item.nickname}}</label>
-				</div>
-			</div>
+			</el-card>
 		</div>
 
 		<div class="model">
@@ -108,7 +112,7 @@
 				alert("banner")
 			}
 			const handleBigCafeItemClick = (item) => {
-				
+
 				router.push({
 					name: "AnchorFragment",
 					params: {
@@ -181,6 +185,12 @@
 		}
 	}
 
+	.bigcafe-container {
+		margin-top: .08rem;
+		margin-left: .12rem;
+		margin-right: .12rem;
+	}
+
 	.bigcafe {
 		width: 95%;
 		display: flex;
@@ -193,7 +203,7 @@
 			display: flex;
 			flex-direction: row;
 			align-items: center;
-			height: .48rem;
+			height: .28rem;
 		}
 
 		&__title {
@@ -230,8 +240,10 @@
 			display: flex;
 			flex-direction: column;
 			flex: 1;
+			margin-top: .1rem;
 			justify-content: center;
 			align-items: center;
+			margin-bottom: .1rem;
 		}
 
 		&__avatar {
