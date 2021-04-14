@@ -4,7 +4,7 @@
 		<div class="live-container">
 			<el-avatar class="avatar" :src="userData.userInfo.avatar" />
 			<div class="space"></div>
-			<label class="live_title">我要直播</label>
+			<label class="live_title" @click="handleLiveClick">我要直播</label>
 		</div>
 		<div class="nickname-container">
 			<label class="nickname-container__nickname">{{userData.userInfo.nickname}}</label>
@@ -16,8 +16,7 @@
 		</div>
 	</div>
 	<div class="tab">
-		<el-tabs class="tab__item" 
-		v-model="data.activeName" @tab-click="handleModelClick" stretch="true">
+		<el-tabs class="tab__item" v-model="data.activeName" @tab-click="handleModelClick" stretch="true">
 			<el-tab-pane label="直播记录" name="first">
 				<ModelFragment :index="1" :tags="直播记录" />
 			</el-tab-pane>
@@ -33,7 +32,8 @@
 
 <script>
 	import {
-		reactive
+		reactive,
+		Vue
 	} from 'vue'
 	import {
 		useRouter
@@ -41,6 +41,9 @@
 	import {
 		get
 	} from '../../util/request_get.js'
+	import {
+		getCurrentInstance
+	} from 'vue'
 
 	const UserInfoEffect = () => {
 
@@ -79,8 +82,11 @@
 
 	export default {
 		name: "AnchorFragment",
-		setup() {
+		setup(props, context) {
 			console.log("setup")
+			const {
+				ctx
+			} = getCurrentInstance();
 			const {
 				userData,
 				getUserInfo,
@@ -91,18 +97,45 @@
 				activeName: 'second'
 			})
 
+			const handleLiveClick = () => {
+				ctx.$bridge.callHandler('toLiveHomePageFunction', "data from js", (res) => {
+					alert('获取app响应数据:' + res)
+				})
+			}
+
 			return {
 				data,
 				userData,
 				getUserInfo,
-				getAnchorInfo
+				getAnchorInfo,
+				handleLiveClick
 			}
 		},
 		mounted() {
 			console.log("mounted")
 			console.log(this.$route.params)
-			this.getAnchorInfo(this.$route.params.anchorId)
-			this.getUserInfo(this.$route.params.anchorId)
+			// this.getAnchorInfo(this.$route.params.anchorId)
+			// this.getUserInfo(this.$route.params.anchorId)
+
+			// // 注册事件
+			this.appCall()
+			// this.callAPP(this)
+		},
+		methods: {
+			// js调用app ==================================
+			callAPP() {
+				this.$bridge.callHandler('toLiveHomePageFunction', "data from js", (res) => {
+					alert('获取app响应数据:' + res)
+				})
+			},
+			// app调js =====================================
+			// app调用js的方法 appCallJS, 需要注册
+			appCall() {
+				this.$bridge.registerHandler('initToken', (datas, responseCallback) => {
+					alert('showStationList' + datas)
+					localStorage.setItem("token", datas)
+				})
+			}
 		}
 	}
 </script>

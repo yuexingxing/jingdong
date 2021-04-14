@@ -1,4 +1,8 @@
-import { createApp } from 'vue'
+import {
+	createApp
+}
+from 'vue'
+import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import 'normalize.css'
@@ -8,10 +12,16 @@ import VueAxios from 'vue-axios'
 import router from './router'
 import ElementPlus from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
+import Bridge from './JSbridge.js'
 
-createApp(App).use(store, VueAxios, axios).use(router).use(ElementPlus).mount('#app')
+const app = createApp(App)
+app.config.globalProperties.$bridge = Bridge
+app.use(store, VueAxios, axios)
+app.use(router)
+app.use(ElementPlus)
+app.mount('#app')
 
 new Vue({
-  el: '#app',
-  render: h => h(App)
+	el: '#app',
+	render: h => h(App)
 });
