@@ -16,6 +16,7 @@ import Bridge from './JSbridge.js'
 
 const app = createApp(App)
 app.config.globalProperties.$bridge = Bridge
+app.config.globalProperties.$appName = "三少高定"
 app.use(store, VueAxios, axios)
 app.use(router)
 app.use(ElementPlus)

@@ -11,7 +11,7 @@
 			<label class="nickname-container__label">三少高定</label>
 		</div>
 		<div class="fans">
-			<label class="fans__title">粉丝</label>
+			<label class="fans__title">粉丝-{{data.appName}}</label>
 			<label class="fans__count">{{userData.anchorInfo.attention_count}}</label>
 		</div>
 	</div>
@@ -94,9 +94,11 @@
 			} = UserInfoEffect()
 
 			const data = reactive({
+				appName: "",
 				activeName: 'second'
 			})
 
+			data.appName = ctx.$appName
 			const handleLiveClick = () => {
 				ctx.$bridge.callHandler('toLiveHomePageFunction', "data from js", (res) => {
 					alert('获取app响应数据:' + res)
@@ -119,9 +121,15 @@
 
 			// // 注册事件
 			this.appCall()
+			this.setTitle()
 			// this.callAPP(this)
 		},
 		methods: {
+			setTitle(){
+				this.$bridge.callHandler('setH5TitleFunction', "付款信息", (res) => {
+					
+				})
+			},
 			// js调用app ==================================
 			callAPP() {
 				this.$bridge.callHandler('toLiveHomePageFunction', "data from js", (res) => {
