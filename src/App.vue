@@ -4,7 +4,6 @@
 
 <script>
 export default {
-  name: 'App',
-  render: h => h(App)
+  name: 'App'
 }
 </script>

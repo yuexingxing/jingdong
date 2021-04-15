@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	<div v-else>
-		<EmptyData></EmptyData>
+		<EmptyData :message="暂无视频"></EmptyData>
 	</div>
 </template>
 

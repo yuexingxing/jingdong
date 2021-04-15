@@ -1,13 +1,18 @@
 <template>
 	<div class="wrap">
 		<img class="wrap__icon" src="../assets/image_empty.png" />
-		<span class="wrap__tile">暂无数据</span>
+		<span class="wrap__title">{{message}}暂无数据</span>
 	</div>
 </template>
 
 <script>
+	import {
+		reactive
+	} from 'vue'
+
 	export default {
-		name: "EmptyData"
+		name: "EmptyData",
+		props: ['message']
 	}
 </script>
 
@@ -18,15 +23,16 @@
 		height: 2rem;
 		justify-content: center;
 		align-items: center;
-		
-		&__icon{
+
+		&__icon {
 			width: 1rem;
 			height: 1rem;
 		}
 
 		&__title {
-			font-size: .22rem;
-			margin-top: .12rem;
+			font-size: .13rem;
+			margin-top: .08rem;
+			color: #999;
 		}
 	}
 </style>

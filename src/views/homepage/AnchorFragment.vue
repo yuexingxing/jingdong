@@ -15,8 +15,8 @@
 			<label class="fans__count">{{userData.anchorInfo.attention_count}}</label>
 		</div>
 	</div>
-	<div class="tab">
-		<el-tabs class="tab__item" v-model="data.activeName" @tab-click="handleModelClick" stretch="true">
+	<div class="model">
+		<el-tabs v-model="data.activeName" @tab-click="handleModelClick" stretch="true">
 			<el-tab-pane label="直播记录" name="first">
 				<ModelFragment :index="1" :tags="直播记录" />
 			</el-tab-pane>
@@ -44,6 +44,7 @@
 	import {
 		getCurrentInstance
 	} from 'vue'
+	import ModelFragment from './ModelFragment.vue'
 
 	const UserInfoEffect = () => {
 
@@ -82,6 +83,9 @@
 
 	export default {
 		name: "AnchorFragment",
+		components: {
+			ModelFragment
+		},
 		setup(props, context) {
 			console.log("setup")
 			const {
@@ -242,11 +246,11 @@
 		}
 	}
 
-	.tab {
+	.model {
 		width: 100%;
-
-		&__item {
-			width: 100%;
-		}
+		display: flex;
+		margin-top: .12rem;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
