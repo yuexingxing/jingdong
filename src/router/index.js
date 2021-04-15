@@ -6,6 +6,9 @@ import HomePage from '../views/homepage/HomePage.vue'
 import Login from '../views/login/Login.vue'
 import Register from '../views/register/Register.vue'
 import AnchorFragment from '../views/homepage/AnchorFragment.vue'
+import Main from '../views/main/Main.vue'
+import Video from '../views/video/Video.vue'
+import Person from '../views/person/Person.vue'
 
 const routes = [{
 		path: '/',
@@ -35,6 +38,21 @@ const routes = [{
 		path: '/homepage',
 		name: 'AnchorFragment',
 		component: AnchorFragment
+	},
+	{
+		path: '/main',
+		name: 'Main',
+		component: Main
+	},
+	{
+		path: '/video',
+		name: 'Video',
+		component: Video
+	},
+	{
+		path: '/person',
+		name: 'Person',
+		component: Person
 	}
 ]
 

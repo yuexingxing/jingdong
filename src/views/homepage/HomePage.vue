@@ -1,57 +1,60 @@
 <template>
-	<div class="container">
-		<div class="banner">
-			<div class="block">
-				<el-carousel height="2rem">
-					<el-carousel-item v-for="(item, index) in data.bannerList" :key="index">
-						<el-image class="banner_img" :src="item.artitag_url"></el-image>
-					</el-carousel-item>
-				</el-carousel>
+	<div class="wrap">
+		<div class="container">
+			<div class="banner">
+				<div class="block">
+					<el-carousel height="2rem">
+						<el-carousel-item v-for="(item, index) in data.bannerList" :key="index">
+							<el-image class="banner_img" :src="item.artitag_url"></el-image>
+						</el-carousel-item>
+					</el-carousel>
+				</div>
+			</div>
+			<div class="bigcafe-container">
+				<el-card class="box-card" :body-style="{padding: '2px' }">
+
+					<div class="bigcafe">
+						<div class="bigcafe__top-container">
+							<div>
+								<label class="bigcafe__title">高定官在线</label>
+							</div>
+							<div class="bigcafe__space"></div>
+
+							<div @click="handleChangeBigCafeClick">
+								<label class="bigcafe__change">换一换</label>
+								<img class="bigcafe__img" src="../../assets/icon_refresh.png" />
+							</div>
+						</div>
+						<div class="bigcafe__item-container">
+							<div v-for="(item, index) in bigCafeData.bigCafeList" :key="index" class="bigcafe__item"
+								@click="handleBigCafeItemClick(item)">
+								<el-avatar class="bigcafe__avatar" :src="item.avatar" />
+								<label class="bigcafe__nickname">{{item.nickname}}</label>
+							</div>
+						</div>
+					</div>
+				</el-card>
+			</div>
+
+			<div class="model">
+				<el-tabs v-model="data.activeName" @tab-click="handleModelClick">
+					<el-tab-pane label="健康咨询" name="first">
+						<ModelFragment :index="1" :tags="健康咨询" />
+					</el-tab-pane>
+					<el-tab-pane label="魅力无限" name="second">
+						<ModelFragment :index="2" :tags="魅力无限" />
+					</el-tab-pane>
+					<el-tab-pane label="投资理财" name="third">
+						<ModelFragment :index="3" :tags="投资理财" />
+					</el-tab-pane>
+					<el-tab-pane label="高端珠宝" name="fourth">
+						<ModelFragment :index="4" :tags="高端珠宝" />
+					</el-tab-pane>
+				</el-tabs>
 			</div>
 		</div>
-		<div class="bigcafe-container">
-			<el-card class="box-card" :body-style="{padding: '2px' }">
-
-				<div class="bigcafe">
-					<div class="bigcafe__top-container">
-						<div>
-							<label class="bigcafe__title">高定官在线</label>
-						</div>
-						<div class="bigcafe__space"></div>
-
-						<div @click="handleChangeBigCafeClick">
-							<label class="bigcafe__change">换一换</label>
-							<img class="bigcafe__img" src="../../assets/icon_refresh.png" />
-						</div>
-					</div>
-					<div class="bigcafe__item-container">
-						<div v-for="(item, index) in bigCafeData.bigCafeList" :key="index" class="bigcafe__item"
-							@click="handleBigCafeItemClick(item)">
-							<el-avatar class="bigcafe__avatar" :src="item.avatar" />
-							<label class="bigcafe__nickname">{{item.nickname}}</label>
-						</div>
-					</div>
-				</div>
-			</el-card>
-		</div>
-
-		<div class="model">
-			<el-tabs v-model="data.activeName" @tab-click="handleModelClick">
-				<el-tab-pane label="健康咨询" name="first">
-					<ModelFragment :index="1" :tags="健康咨询" />
-				</el-tab-pane>
-				<el-tab-pane label="魅力无限" name="second">
-					<ModelFragment :index="2" :tags="魅力无限" />
-				</el-tab-pane>
-				<el-tab-pane label="投资理财" name="third">
-					<ModelFragment :index="3" :tags="投资理财" />
-				</el-tab-pane>
-				<el-tab-pane label="高端珠宝" name="fourth">
-					<ModelFragment :index="4" :tags="高端珠宝" />
-				</el-tab-pane>
-			</el-tabs>
-		</div>
 	</div>
+	<Docker :currentIndex="1"></Docker>
 </template>
 
 <script>
@@ -66,6 +69,8 @@
 		get
 	} from '../../util/request_get.js'
 	import ModelFragment from './ModelFragment.vue'
+	import Docker from '../../components/Docker.vue'
+
 	const BigCafeEffect = () => {
 
 		const bigCafeData = reactive({
@@ -100,6 +105,7 @@
 	export default {
 		name: 'HomePage',
 		components: {
+			Docker,
 			ModelFragment
 		},
 		setup() {
@@ -165,6 +171,16 @@
 </script>
 
 <style lang="scss" scoped>
+	.wrapper {
+		overflow-y: auto;
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: .5rem;
+		right: 0;
+		padding: 0 .18rem .1rem .18rem;
+	}
+
 	.container {
 		display: flex;
 		flex-direction: column;

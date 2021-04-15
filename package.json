@@ -16,7 +16,10 @@
     "element-theme-default": "^1.4.13",
     "element-ui": "^2.15.1",
     "http-proxy-middleware": "^1.0.6",
+    "img": "^3.0.3",
     "jsbridge": "^1.0.10",
+    "less": "^4.1.1",
+    "less-loader": "^8.1.0",
     "mint-ui": "^2.2.13",
     "normalize.css": "^8.0.1",
     "vue": "^3.0.0",
@@ -42,6 +45,7 @@
     "eslint-plugin-vue": "^7.0.0-0",
     "lib-flexible": "^0.3.2",
     "sass": "^1.26.5",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "sass-resources-loader": "^2.2.1"
   }
 }

@@ -1,28 +1,30 @@
 <template>
-	<view>
-		<el-tabs v-model="activeName" @tab-click="handleClick" tab-position="bottom">
-		  <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-		  <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-		  <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-		  <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-		</el-tabs>
-	</view>
-
+	<div class="wrap">
+		<HomePage></HomePage>
+	</div>
+	<Docker :currentIndex="1"></Docker>
 </template>
+
 <script>
-  export default {
-    data() {
-      return {
-        activeName: 'second'
-      };
-    },
-    methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
-      }
-    }
-  };
+	import Docker from '../../components/Docker.vue'
+	import HomePage from '../homepage/HomePage.vue'
+	export default {
+		name: 'Main',
+		components: {
+			Docker,
+			HomePage
+		}
+	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.wrapper {
+		overflow-y: auto;
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: .5rem;
+		right: 0;
+		padding: 0 .18rem .1rem .18rem;
+	}
 </style>
