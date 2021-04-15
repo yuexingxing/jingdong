@@ -149,10 +149,16 @@
 		},
 		mounted() {
 			console.log("mounted")
+			this.setTitle()
 		},
 		methods: {
 			handleModelClick(tab, event) {
 				console.log(tab, event);
+			},
+			setTitle() {
+				this.$bridge.callHandler('setH5TitleFunction', "高定商城", (res) => {
+
+				})
 			}
 		}
 	}

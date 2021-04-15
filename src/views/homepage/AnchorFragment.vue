@@ -11,7 +11,7 @@
 			<label class="nickname-container__label">三少高定</label>
 		</div>
 		<div class="fans">
-			<label class="fans__title">粉丝-{{data.appName}}</label>
+			<label class="fans__title">粉丝</label>
 			<label class="fans__count">{{userData.anchorInfo.attention_count}}</label>
 		</div>
 	</div>
@@ -125,22 +125,22 @@
 			// this.callAPP(this)
 		},
 		methods: {
-			setTitle(){
-				this.$bridge.callHandler('setH5TitleFunction', "付款信息", (res) => {
-					
+			setTitle() {
+				this.$bridge.callHandler('setH5TitleFunction', "创作中心", (res) => {
+
 				})
 			},
 			// js调用app ==================================
 			callAPP() {
 				this.$bridge.callHandler('toLiveHomePageFunction', "data from js", (res) => {
-					alert('获取app响应数据:' + res)
+					console.log('获取app响应数据:' + res)
 				})
 			},
 			// app调js =====================================
 			// app调用js的方法 appCallJS, 需要注册
 			appCall() {
 				this.$bridge.registerHandler('initToken', (datas, responseCallback) => {
-					alert('showStationList' + datas)
+					console.log('获取app响应数据:' + datas)
 					localStorage.setItem("token", datas)
 				})
 			}

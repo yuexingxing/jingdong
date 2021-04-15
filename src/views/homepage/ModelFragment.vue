@@ -1,25 +1,27 @@
 <template>
-	<div class="container-top">
+	<div class="container-top" v-if="modelData.list.length > 0">
 		<div class="item" v-for="(item, index) in modelData.list" :key="index">
-			
-				<el-image class="item__live__bg" :src="item.frontcover" alt=""
-					placeholder="../../assets/image_graphofbooth_default2.png" :fit="fit" />
-				<div class="item__live">
-					<div class="item__live__dot"></div>
-					<label class="item__live__title">直播中</label>
-				</div>
-				<label class="space"></label>
-				<div>
-					<label class="item__content">{{item.live_title}}</label>
-				</div>
-				<div class="item__bottom">
-					<el-avatar class="item__bottom__avatar" :src="item.pushers.avatar"></el-avatar>
-					<label class="item__bottom__name">{{item.pushers.anchor_name}}</label>
-					<img class="item__bottom__bell" src="../../assets/img_bell.png" />
-					<label class="item__bottom__count">{{item.thumb}}人</label>
-				</div>
+
+			<el-image class="item__live__bg" :src="item.frontcover" alt=""
+				placeholder="../../assets/image_graphofbooth_default2.png" :fit="fit" />
+			<div class="item__live">
+				<div class="item__live__dot"></div>
+				<label class="item__live__title">直播中</label>
 			</div>
-		
+			<label class="space"></label>
+			<div>
+				<label class="item__content">{{item.live_title}}</label>
+			</div>
+			<div class="item__bottom">
+				<el-avatar class="item__bottom__avatar" :src="item.pushers.avatar"></el-avatar>
+				<label class="item__bottom__name">{{item.pushers.anchor_name}}</label>
+				<img class="item__bottom__bell" src="../../assets/img_bell.png" />
+				<label class="item__bottom__count">{{item.thumb}}人</label>
+			</div>
+		</div>
+	</div>
+	<div v-else>
+		<EmptyData></EmptyData>
 	</div>
 </template>
 
@@ -33,6 +35,8 @@
 	import {
 		get
 	} from '../../util/request_get.js'
+	import EmptyData from '../../components/EmptyData.vue'
+
 	const ModelDataEffect = () => {
 
 		const modelData = reactive({
@@ -57,10 +61,11 @@
 			console.log(result)
 			if (result.ret === 'OK') {
 				console.log("size-" + result.content.rows.length)
-				for(var i=0; i< result.content.rows.length; i++){
+				for (var i = 0; i < result.content.rows.length; i++) {
 					console.log(result.content.rows[i].live_title)
-					if(result.content.rows[i].frontcover === ''){
-						result.content.rows[i].frontcover = "http://img.cyw.com/shopx/20130606155913125664/shopinfo/201605041441522.jpg";
+					if (result.content.rows[i].frontcover === '') {
+						result.content.rows[i].frontcover =
+							"http://img.cyw.com/shopx/20130606155913125664/shopinfo/201605041441522.jpg";
 					}
 				}
 				modelData.list = result.content.rows;
@@ -79,6 +84,9 @@
 			'index',
 			'tags'
 		],
+		components: {
+			EmptyData
+		},
 		watch: {
 			index(newData, oldData) {
 				console.log("watch-" + newData + "-" + oldData)
