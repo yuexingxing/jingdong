@@ -9,6 +9,16 @@
 		name: 'Video',
 		components: {
 			Docker
+		},
+		mounted() {
+			this.setTitle()
+		},
+		methods: {
+			setTitle() {
+				this.$bridge.callHandler('setH5TitleFunction', "视频", (res) => {
+
+				})
+			}
 		}
 	}
 </script>

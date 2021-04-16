@@ -9,6 +9,7 @@ import AnchorFragment from '../views/homepage/AnchorFragment.vue'
 import Main from '../views/main/Main.vue'
 import Video from '../views/video/Video.vue'
 import Person from '../views/person/Person.vue'
+import Upload from '../views/upload/Upload.vue'
 
 const routes = [{
 		path: '/',
@@ -53,6 +54,11 @@ const routes = [{
 		path: '/person',
 		name: 'Person',
 		component: Person
+	},
+	{
+		path: '/upload',
+		name: 'Upload',
+		component: Upload
 	}
 ]
 
