@@ -3,7 +3,7 @@
 		<div v-for="(item, index) in dockerList"
 			:class="{'docker__item': true, 'docker__item--active': index === currentIndex}" :key="item.icon">
 			<router-link :to='item.to'>
-				<div class="iconfont" v-html="item.icon" />
+				<img class="docker__item__icon" :src="getIcon(item.icon)" />
 				<div class="docker__title">{{item.text}}</div>
 			</router-link>
 		</div>
@@ -14,23 +14,35 @@
 	export default {
 		name: 'Docker',
 		props: ['currentIndex'],
+		computed: {
+			getIcon() {
+				return function(icon) {
+					return require('../assets/' + icon)
+				}
+			},
+			getIndex() {
+				return function(index) {
+					return "pos-" + index
+				}
+			}
+		},
 		setup() {
 			const dockerList = [{
-					icon: '&#xe6f3;',
+					icon: 'tab_my_normal_short_video.png',
 					text: '视频',
 					to: {
 						name: 'Video'
 					}
 				},
 				{
-					icon: '&#xe7e5;',
+					icon: 'tab_shop_normal.png',
 					text: '商城',
 					to: {
 						name: 'HomePage'
 					}
 				},
 				{
-					icon: '&#xe660;',
+					icon: 'tab_my_normal.png',
 					text: '我的',
 					to: {
 						name: 'Person'
@@ -55,7 +67,7 @@
 		left: 0;
 		bottom: 0;
 		width: 100%;
-		height: .49rem;
+		height: .60rem;
 		border-top: .01rem solid $content-bgColor;
 
 		&__item {
@@ -65,6 +77,12 @@
 			a {
 				color: $content-fontcolor;
 				text-decoration: none;
+			}
+
+			&__icon {
+				padding-top: .08rem;
+				width: .22rem;
+				height: .22rem;
 			}
 
 			.iconfont {
